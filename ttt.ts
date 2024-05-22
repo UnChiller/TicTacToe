@@ -3,12 +3,12 @@ type TicTacToePlace = 0 | 1 | 2;
 type TicTacToeRow = [TicTacToePiece, TicTacToePiece, TicTacToePiece];
 type TicTacToeState = [TicTacToeRow, TicTacToeRow, TicTacToeRow];
 class TicTacToeBoard {
-    private myBoard: TicTacToeState;
+    private myState: TicTacToeState;
     constructor(state?: TicTacToeState) {
         if (state) {
-            this.myBoard = state;
+            this.myState = state;
         } else {
-            this.myBoard = [
+            this.myState = [
                 [null, null, null],
                 [null, null, null],
                 [null, null, null]
@@ -16,32 +16,49 @@ class TicTacToeBoard {
         }
     }
 
-    getPiece(row: TicTacToePlace, column: TicTacToePlace): TicTacToePiece {
-        return this.myBoard[row][column];
+    public getPiece(row: TicTacToePlace, column: TicTacToePlace): TicTacToePiece {
+        return this.myState[row][column];
     }
 
-    getState(): TicTacToeState {
-        return this.myBoard;
+    public getState(): TicTacToeState {
+        return this.myState;
     }
 
-    getWinState(): TicTacToePiece {
-        if (this.myBoard[0][0] === this.myBoard[0][1] && this.myBoard[0][0] === this.myBoard[0][2] && this.myBoard[0][0]) return this.myBoard[0][0];
-        if (this.myBoard[1][0] === this.myBoard[1][1] && this.myBoard[1][0] === this.myBoard[1][2] && this.myBoard[1][0]) return this.myBoard[1][0];
-        if (this.myBoard[2][0] === this.myBoard[2][1] && this.myBoard[2][0] === this.myBoard[2][2] && this.myBoard[2][0]) return this.myBoard[2][0];
-        if (this.myBoard[0][0] === this.myBoard[1][0] && this.myBoard[0][0] === this.myBoard[2][0] && this.myBoard[0][0]) return this.myBoard[0][0];
-        if (this.myBoard[0][1] === this.myBoard[1][1] && this.myBoard[0][1] === this.myBoard[2][1] && this.myBoard[0][1]) return this.myBoard[0][1];
-        if (this.myBoard[0][2] === this.myBoard[1][2] && this.myBoard[0][2] === this.myBoard[2][2] && this.myBoard[0][2]) return this.myBoard[0][2];
-        if (this.myBoard[0][0] === this.myBoard[1][1] && this.myBoard[0][0] === this.myBoard[2][2] && this.myBoard[0][0]) return this.myBoard[0][0];
+    public getWinState(): TicTacToePiece {
+        if (this.myState[0][0] === this.myState[0][1] && this.myState[0][0] === this.myState[0][2] && this.myState[0][0]) return this.myState[0][0];
+        if (this.myState[1][0] === this.myState[1][1] && this.myState[1][0] === this.myState[1][2] && this.myState[1][0]) return this.myState[1][0];
+        if (this.myState[2][0] === this.myState[2][1] && this.myState[2][0] === this.myState[2][2] && this.myState[2][0]) return this.myState[2][0];
+        if (this.myState[0][0] === this.myState[1][0] && this.myState[0][0] === this.myState[2][0] && this.myState[0][0]) return this.myState[0][0];
+        if (this.myState[0][1] === this.myState[1][1] && this.myState[0][1] === this.myState[2][1] && this.myState[0][1]) return this.myState[0][1];
+        if (this.myState[0][2] === this.myState[1][2] && this.myState[0][2] === this.myState[2][2] && this.myState[0][2]) return this.myState[0][2];
+        if (this.myState[0][0] === this.myState[1][1] && this.myState[0][0] === this.myState[2][2] && this.myState[0][0]) return this.myState[0][0];
         return null;
     }
 
-    toString(): string {
-        return JSON.stringify(this.myBoard);
+    protected setPiece(row: TicTacToePlace, column: TicTacToePlace, piece: TicTacToePiece): void {
+        this.myState[row][column] = piece;
     }
 
-    toJSON() {
-        return this.myBoard;
+    public placePiece(row: TicTacToePlace, column: TicTacToePlace, piece: TicTacToePiece): void {
+        if (this.myState[row][column]) throw new Error("Location occupied")
+        this.setPiece(row, column, piece)
+    }
+
+    public toString(): string {
+        return JSON.stringify(this.myState);
+    }
+
+    public toJSON() {
+        return this.myState;
     }
 }
 
-console.log(""+new TicTacToeBoard().getState())
+//function getFirstOpen(board: TicTacToeBoard) {
+//    let state = board.getState();
+//    let list = [...state[0],...state[1],...state[2]];
+//    
+//}
+
+let myBoard = new TicTacToeBoard()
+console.log(myBoard)
+console.log(myBoard.getWinState())
