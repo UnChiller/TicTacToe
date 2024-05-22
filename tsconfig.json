@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "noUncheckedIndexedAccess": true,
+        "target": "ES6"
+    },
+    "files": [
+        "ttt.ts"
+    ]
+}
